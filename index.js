@@ -4,10 +4,11 @@ const bookInfo = document.getElementById('book-info');
 const bookTitle = document.getElementById('book-title');
 const bookAuthor = document.getElementById('book-author');
 const bookSummary = document.getElementById('book-summary');
+const searchInput = document.getElementById('search');
 
 function fetchBooks(searchTerm = '') {
     fetch(`https://wjs-api.vercel.app/api/books?search=${searchTerm}`)
-.then(response => response.json())
+        .then(response => response.json())
         .then(data => {
             bookList.innerHTML = '';
             data.forEach(book => {
@@ -30,6 +31,11 @@ function showBookInfo(book) {
     bookSummary.textContent = `Shrnutí: ${book.shortDescription}`;
     bookInfo.style.display = 'block';
 }
+
+searchInput.addEventListener('input', function() {
+    const searchTerm = this.value;
+    fetchBooks(searchTerm);
+});
 
 fetchBooks();
 
